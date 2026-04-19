@@ -1,0 +1,113 @@
+# Installing libraries that are not pre-installed in Google Colab
+# (NumPy, Pandas, Matplotlib, etc. are already available)
+!pip install seaborn plotly scikit-learn beautifulsoup4 scrapy pycaret tensorflow keras torch torchvision
+
+
+# NumPy is used for fast mathematical operations on arrays and matrices
+import numpy as np
+arr = np.array([1, 2, 3, 4])
+print("Array:", arr)
+print("Mean:", np.mean(arr))
+print("Square of elements:", arr ** 2)
+
+
+# SciPy is used for advanced scientific and statistical calculations
+from scipy import stats
+data = [1, 2, 2, 3, 4, 4, 4]
+print("Mean:", stats.tmean(data))
+print("Mode:", stats.mode(data, keepdims=True))
+
+
+# Pandas is used to work with structured data like tables (Excel-like data)
+import pandas as pd
+df = pd.DataFrame({
+    "Name": ["A", "B", "C"],
+    "Marks": [85, 90, 78]
+})
+print("DataFrame:\n", df)
+# Filtering data (Marks > 80)
+print("\nFiltered Data:\n", df[df["Marks"] > 80])
+
+
+# Matplotlib is used for basic plotting like line charts, bar charts, etc.
+import matplotlib.pyplot as plt
+x = [1, 2, 3, 4]
+y = [10, 20, 15, 25]
+plt.plot(x, y)
+plt.title("Line Plot")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.show()
+
+
+# Seaborn is built on Matplotlib and used for attractive statistical plots
+import seaborn as sns
+import pandas as pd
+df = pd.DataFrame({
+    "x": [1, 2, 3, 4],
+    "y": [10, 20, 15, 25]
+})
+sns.scatterplot(x="x", y="y", data=df)
+
+
+# Plotly is used for interactive graphs (zoom, hover, dynamic charts)
+import plotly.express as px
+import pandas as pd
+df = pd.DataFrame({
+    "x": [1, 2, 3, 4],
+    "y": [10, 20, 15, 25]
+})
+fig = px.line(df, x="x", y="y", title="Interactive Line Plot")
+fig.show()
+
+
+# Scikit-learn is used for building machine learning models like regression & classification
+from sklearn.linear_model import LinearRegression
+import numpy as np
+# Input data (X = input, y = output)
+X = np.array([[1], [2], [3], [4]])
+y = np.array([2, 4, 6, 8])
+# Create and train model
+model = LinearRegression()
+model.fit(X, y)
+# Predict output
+print("Prediction for 5:", model.predict([[5]]))
+
+
+# TensorFlow is used to build deep learning models and neural networks
+import tensorflow as tf
+tensor = tf.constant([1, 2, 3, 4])
+print("Tensor:", tensor)
+
+
+# Keras is used to build neural networks easily on top of TensorFlow
+from tensorflow import keras
+from tensorflow.keras import layers
+model = keras.Sequential([
+    layers.Dense(10, activation='relu', input_shape=(3,)),
+    layers.Dense(1)
+])
+model.summary()
+
+
+# PyTorch is used for flexible deep learning and research-based models
+import torch
+x = torch.tensor([1.0, 2.0, 3.0])
+print("Tensor:", x)
+
+
+# BeautifulSoup is used to extract data from HTML web pages
+from bs4 import BeautifulSoup
+html = "<html><body><h1>Hello Data Science</h1></body></html>"
+soup = BeautifulSoup(html, "html.parser")
+print("Extracted Text:", soup.h1.text)
+
+
+# Scrapy is used for large-scale web scraping projects
+import scrapy
+class MySpider(scrapy.Spider):
+    name = "example"
+    def start_requests(self):
+        yield scrapy.Request(url="http://example.com", callback=self.parse)
+    def parse(self, response):
+        print(response.text[:100])

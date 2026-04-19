@@ -1,0 +1,67 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from statsmodels.tsa.arima.model import ARIMA
+
+
+url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/airline-passengers.csv"
+data = pd.read_csv(url)
+data['Month'] = pd.to_datetime(data['Month'])
+data.set_index('Month', inplace=True)
+data.head()
+
+
+plt.figure(figsize=(10,5))
+plt.plot(data['Passengers'])
+plt.title("Air Passengers Time Series Data")
+plt.xlabel("Year")
+plt.ylabel("Number of Passengers")
+plt.show()
+
+
+result = adfuller(data['Passengers'])
+print("ADF Statistic:", result[0])
+print("p-value:", result[1])
+if result[1] <= 0.05:
+    print("Data is Stationary")
+else:
+    print("Data is Non-Stationary")
+
+
+data_diff = data['Passengers'].diff().dropna()
+plt.figure(figsize=(10,5))
+plt.plot(data_diff)
+plt.title("Differenced Time Series")
+plt.xlabel("Year")
+plt.ylabel("Differenced Passengers")
+plt.show()
+
+
+plt.figure(figsize=(12,5))
+plt.subplot(1,2,1)
+plot_acf(data_diff, ax=plt.gca(), lags=20)
+plt.subplot(1,2,2)
+plot_pacf(data_diff, ax=plt.gca(), lags=20)
+plt.show()
+
+
+model = ARIMA(data['Passengers'], order=(1,1,1))
+model_fit = model.fit()
+print(model_fit.summary())
+
+
+forecast = model_fit.forecast(steps=10)
+print("Forecasted Values:")
+print(forecast)
+
+
+plt.figure(figsize=(10,5))
+plt.plot(data['Passengers'], label="Original Data")
+plt.plot(forecast.index, forecast, label="Forecast", color='red')
+plt.title("ARIMA Forecast")
+plt.xlabel("Year")
+plt.ylabel("Passengers")
+plt.legend()
+plt.show()

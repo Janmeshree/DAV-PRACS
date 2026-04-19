@@ -1,0 +1,85 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+url = "https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv"
+df = pd.read_csv(url)
+df.head()
+
+
+df.info()
+df.describe()
+
+
+df['species'].value_counts().plot(kind='bar',
+                                  color=['red', 'green', 'blue'])
+plt.title("Species Distribution")
+plt.xlabel("Species")
+plt.ylabel("Count")
+plt.show()
+
+
+df['species'].value_counts().plot(kind='pie', autopct='%1.1f%%')
+plt.title("Species Distribution (Pie Chart)")
+plt.ylabel("")
+plt.show()
+
+
+plt.hist(df['petal_length'], bins=20, color='green')
+plt.title("Histogram of Petal Length")
+plt.xlabel("Petal Length")
+plt.ylabel("Frequency")
+plt.show()
+
+
+sns.boxplot(x='species', 
+            y='sepal_length', 
+            data=df,
+            palette='Set2')
+plt.title("Box Plot - Sepal Length by Species")
+plt.show()
+
+
+plt.plot(df['sepal_length'], color='blue')
+plt.title("Line Chart - Sepal Length Trend")
+plt.xlabel("Index")
+plt.ylabel("Sepal Length")
+plt.show()
+
+
+sns.scatterplot(data=df,
+                x='sepal_length',
+                y='petal_length',
+                hue='species')
+plt.title("Scatter Plot: Sepal vs Petal Length")
+plt.show()
+
+
+plt.figure(figsize=(6,4))
+sns.heatmap(df.corr(numeric_only=True),
+            annot=True,
+            cmap='coolwarm')
+plt.title("Heatmap of Iris Dataset")
+plt.show()
+
+
+setosa = df[df['species'] == 'setosa']
+data = setosa['petal_length']
+
+
+plt.hist(data, bins=15, density=True, alpha=0.5, color='blue')
+plt.title("PDF of Setosa Petal Length")
+plt.xlabel("Petal Length")
+plt.ylabel("Density")
+plt.show()
+
+
+sorted_data = np.sort(data)
+cdf = np.arange(len(sorted_data)) / float(len(sorted_data))
+plt.plot(sorted_data, cdf, color='red')
+plt.title("CDF of Setosa Petal Length")
+plt.xlabel("Petal Length")
+plt.ylabel("CDF")
+plt.show()

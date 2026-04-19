@@ -1,0 +1,40 @@
+# dplyr is used for data manipulation like filtering, selecting, summarizing
+library(dplyr)
+df <- data.frame(
+  Name = c("A","B","C","D"),
+  Marks = c(85, 90, 78, 60)
+)
+# Filter rows where Marks > 80
+df %>% filter(Marks > 80)
+
+
+# stringr is used for working with text and string operations
+library(stringr)
+text <- "Data Science is powerful"
+# Check if word exists
+str_detect(text, "Science")
+# Replace word
+str_replace(text, "powerful", "amazing")
+
+
+# readr is used to import CSV, TSV, and other structured files
+library(readr)
+
+
+# ggplot2 is used for creating advanced and customizable graphs
+library(ggplot2)
+df <- data.frame(
+  x = c(1,2,3,4),
+  y = c(10,20,15,25)
+)
+# Line plot
+ggplot(df, aes(x, y)) +
+  geom_line() +
+  ggtitle("Line Plot using ggplot2")
+
+
+# lubridate is used for working with dates and time
+library(lubridate)
+date <- ymd("2026-04-20")
+# Add 5 days
+date + days(5)

@@ -1,0 +1,82 @@
+!pip install rpy2
+
+
+%load_ext rpy2.ipython
+
+
+%%R
+url <- "https://raw.githubusercontent.com/uiuc-cse/data-fa14/gh-pages/data/iris.csv"
+iris <- read.csv(url)
+colnames(iris)
+
+
+%%R
+colnames(iris) <- c("SepalLength","SepalWidth","PetalLength","PetalWidth","Species")
+
+
+%%R
+barplot(table(iris$Species),
+        main="Species Distribution",
+        col=c("red","green","blue"),
+        xlab="Species",
+        ylab="Count")
+
+
+%%R
+plot(iris$SepalLength,
+     type="l",
+     col="blue",
+     main="Sepal Length Trend",
+     xlab="Index",
+     ylab="Sepal Length")
+
+
+%%R
+hist(iris$PetalLength,
+     col="green",
+     main="Histogram of Petal Length",
+     xlab="Petal Length")
+
+
+%%R
+plot(iris$SepalLength, iris$PetalLength,
+     col=as.factor(iris$Species),
+     pch=19,
+     main="Scatter Plot",
+     xlab="Sepal Length",
+     ylab="Petal Length")
+
+
+%%R
+boxplot(SepalLength ~ Species,
+        data=iris,
+        col=c("red","green","blue"),
+        main="Boxplot of Sepal Length")
+
+
+%%R
+cor_matrix <- cor(iris[,1:4])
+heatmap(cor_matrix,
+        col=colorRampPalette(c("blue","white","red"))(20),
+        main="Heatmap")
+
+
+%%R
+# Pair Plot
+pairs(iris[,1:4],
+      col=as.factor(iris$Species),
+      pch=19)
+
+
+%%R
+install.packages("ggplot2", repos="http://cran.us.r-project.org")
+library(ggplot2)
+
+
+%%R
+# Using ggplot2 to plot a bar graph showing species distribution
+# This provides a more advanced and aesthetic visualization compared to base R
+ggplot(iris, aes(x=Species, fill=Species)) +
+  geom_bar() +
+  ggtitle("Species Distribution (ggplot2)") +
+  theme_minimal()
